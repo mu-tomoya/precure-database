@@ -4,7 +4,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        body: ["Noto Sans JP", "sans-serif"],
+        body: ["YakuHanJP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", "sans-serif"],
+      },
+      colors: {
+        black: "#363636",
+        main: "#D6225B",
       },
     },
   },
