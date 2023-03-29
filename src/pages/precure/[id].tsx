@@ -1,48 +1,14 @@
-import { useRouter } from "next/router";
-import { DocumentNode, gql, useQuery } from "@apollo/client";
-import { Precure, Special } from "@/gql/graphql";
+import { gql } from "@apollo/client";
+import { Precure } from "@/gql/graphql";
 import dayjs from "dayjs";
+import client from "@/lib/apollo-client";
+import { GetStaticPaths, GetStaticProps } from "next";
 
-export default function Character() {
-  const router = useRouter();
-  const { id } = router.query;
-  const QUERY: DocumentNode = gql`
-    query PrecureQuery($id: String) {
-      precure(id: $id) {
-        after_prologue
-        age
-        before_prologue
-        birthday
-        color
-        cure_name
-        debut
-        fairy
-        id
-        item
-        name
-        series
-        series_id
-        special {
-          solo
-          team
-        }
-        voice
-        voice_birthday
-        youtube_id
-      }
-    }
-  `;
-  const { data, loading, error } = useQuery(QUERY, { variables: { id: id } });
-  if (loading) return null;
-  if (error) {
-    console.error(error);
-    return null;
-  }
-  const precure: Precure = data.precure;
+export default function Character({ precure }: { precure: Precure }) {
   return (
-    <>
+    <div className="outline outline-main mx-4 py-4 rounded-lg">
       <img
-        className="max-w-xs mx-auto rounded-md"
+        className="max-w-xs md:max-w-md mx-auto rounded-md"
         src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/precure/${precure["cure_name"]}.webp`}
         alt={precure["cure_name"]}
       />
@@ -127,6 +93,61 @@ export default function Character() {
           ></iframe>
         </div>
       </div>
-    </>
+    </div>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data } = await client.query({
+    query: gql`
+      query precureIds {
+        precureAllStars {
+          id
+        }
+      }
+    `,
+  });
+  const paths = data.precureAllStars.map((val: { id: string }) => ({
+    params: {
+      id: val.id,
+    },
+  }));
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { data } = await client.query({
+    query: gql`
+      query PrecureQuery($id: String) {
+        precure(id: $id) {
+          after_prologue
+          age
+          before_prologue
+          birthday
+          color
+          cure_name
+          debut
+          fairy
+          id
+          item
+          name
+          series
+          series_id
+          special {
+            solo
+            team
+          }
+          voice
+          voice_birthday
+          youtube_id
+        }
+      }
+    `,
+    variables: { id: params?.id },
+  });
+  return {
+    props: {
+      precure: data.precure,
+    },
+  };
+};
