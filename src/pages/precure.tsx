@@ -62,7 +62,7 @@ export default function PrecurePage() {
         </li>
       </ul>
       {enquiry === "series" && (
-        <select onChange={(e) => setSeriesId(e.target.value)}>
+        <select className="w-3/4" onChange={(e) => setSeriesId(e.target.value)}>
           {array.map((item: Series) => (
             <option key={item["id"]} value={item["id"]}>
               {item["title"]}
