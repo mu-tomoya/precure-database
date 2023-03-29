@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp.min.css" />
       </Head>
-      <body className="font-body text-black">
+      <body className="font-body text-black min-h-screen">
         <Main />
         <NextScript />
       </body>

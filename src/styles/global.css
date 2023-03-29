@@ -7,4 +7,130 @@
   select {
     @apply bg-gray-50 outline outline-main text-black rounded-lg focus-visible:ring-main block w-1/5 mx-auto my-4 p-2.5 font-bold;
   }
+  dl {
+    @apply grid grid-cols-2 gap-x-2 gap-y-4  mx-4 my-4;
+  }
+  dl dt {
+    @apply col-start-1;
+  }
+  dl dd {
+    @apply col-start-2;
+  }
+  .tag {
+    @apply bg-main text-white font-bold rounded-full px-2 py-0.5 text-sm;
+  }
+}
+
+:root {
+  --purple: #cc07e8;
+  --yellow: #f8c526;
+  --pink: #ff3da7;
+  --blue: #0a0aff;
+  --green: #00f12b;
+  --red: #ff0c0c;
+  --gold: #fef87a;
+  --invert: #f89d9d;
+}
+.name-white .name-black {
+}
+
+.name-purple {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--invert) 5%);
+  background: -webkit-linear-gradient(-45deg, var(--purple) 0%, var(--invert) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.name-yellow {
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--invert) 5%);
+  background: -webkit-linear-gradient(-45deg, var(--yellow) 0%, var(--invert) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.name-pink {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--invert) 5%);
+  background: -webkit-linear-gradient(-45deg, var(--pink) 0%, var(--invert) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.name-blue {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--invert) 5%);
+  background: -webkit-linear-gradient(-45deg, var(--blue) 0%, var(--invert) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.name-green {
+  background: linear-gradient(135deg, var(--green) 0%, var(--invert) 5%);
+  background: -webkit-linear-gradient(-45deg, var(--green) 0%, var(--invert) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.name-red {
+  background: linear-gradient(135deg, var(--red) 0%, var(--invert) 5%);
+  background: -webkit-linear-gradient(-45deg, var(--red) 0%, var(--invert) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.name-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--invert) 5%);
+  background: -webkit-linear-gradient(-45deg, var(--gold) 0%, var(--invert) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+li.special {
+  margin: 0.5rem auto;
+}
+li.special::before {
+  content: "♥";
+  margin-right: 2px;
+}
+
+li.special-purple::before {
+  color: var(--purple);
+}
+li.special-yellow::before {
+  color: var(--yellow);
+}
+li.special-pink::before {
+  color: var(--pink);
+}
+li.special-blue::before {
+  color: var(--blue);
+}
+li.special-green::before {
+  color: var(--green);
+}
+li.special-red::before {
+  color: var(--red);
+}
+li.special-gold::before {
+  color: var(--gold);
+}
+.youtube {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.youtube iframe {
+  width: 100%;
+  height: 100%;
+}
+.text-pink {
+  color: var(--pink);
+}
+.text-red {
+  color: var(--red);
+}
+.text-yellow {
+  color: var(--yellow);
+}
+.text-blue {
+  color: var(--blue);
+}
+.text-green {
+  color: var(--green);
+}
+.text-gold {
+  color: var(--gold);
 }
