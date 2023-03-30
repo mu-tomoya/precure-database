@@ -4,6 +4,10 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import RadioButton from "@/components/RadioButton";
 import Hero from "@/components/Hero";
+import "flatpickr/dist/flatpickr.min.css";
+import { Japanese } from "flatpickr/dist/l10n/ja.js";
+import Flatpickr from "react-flatpickr";
+
 const QUERY: DocumentNode = gql`
   query Precure($color: Color, $after: String, $before: String, $age: Age, $series_id: String) {
     precureAllStars(color: $color, after: $after, before: $before, age: $age, series_id: $series_id) {
@@ -18,19 +22,29 @@ const QUERY: DocumentNode = gql`
   }
 `;
 
-export default function PrecurePage() {
+export default function PrecurePage(): JSX.Element | null {
   const [color, setColor] = useState<string>();
-  const [after, setAfter] = useState("");
-  const [before, setBefore] = useState("");
+  const [after, setAfter] = useState<Date>();
+  const [before, setBefore] = useState<Date>();
   const [age, setAge] = useState<Age>();
   const [seriesId, setSeriesId] = useState("");
   const [enquiry, setEnquiry] = useState("");
   const [array, setArray] = useState([]);
+  const option = {
+    locale: Japanese,
+    dateFormat: "Y/m/d",
+
+    maxDate: new Date(),
+  };
   let variables = {};
   if (enquiry === "series" && seriesId) {
     variables = { series_id: seriesId };
   } else if (enquiry === "color" && color) {
     variables = { color: color };
+  } else if (enquiry === "after" && after) {
+    variables = { after: after };
+  } else if (enquiry === "before" && before) {
+    variables = { before: before };
   }
   const { data, loading, error } = useQuery(QUERY, { variables: variables });
   useEffect(() => {
@@ -61,7 +75,7 @@ export default function PrecurePage() {
           </li>
         </ul>
         {enquiry === "series" && (
-          <select className="w-3/4" onChange={(e) => setSeriesId(e.target.value)}>
+          <select className="select w-3/4" onChange={(e) => setSeriesId(e.target.value)}>
             {array.map((item: Series) => (
               <option key={item["id"]} value={item["id"]}>
                 {item["title"]}
@@ -70,7 +84,7 @@ export default function PrecurePage() {
           </select>
         )}
         {enquiry === "color" && (
-          <select className="w-1/3 md:w-1/5" onChange={(e) => setColor(e.target.value)}>
+          <select className="select w-1/3 md:w-1/5" onChange={(e) => setColor(e.target.value)}>
             <option value="black">黒</option>
             <option value="white">白</option>
             <option value="pink">ピンク</option>
@@ -80,6 +94,30 @@ export default function PrecurePage() {
             <option value="green">緑</option>
             <option value="gold">金</option>
           </select>
+        )}
+        {enquiry === "after" && (
+          <div className="w-2/3 md:w-1/4 mx-auto">
+            <Flatpickr
+              options={option}
+              className="bg-white border border-gray-300 inline-block w-full p-2.5 shadow;"
+              onChange={([date]) => {
+                setAfter(date);
+              }}
+            />
+            <span>以降に初変身</span>
+          </div>
+        )}
+        {enquiry === "before" && (
+          <div className="w-2/3 md:w-1/4 mx-auto">
+            <Flatpickr
+              options={option}
+              className="bg-white border border-gray-300 inline-block w-full p-2.5 shadow;"
+              onChange={([date]) => {
+                setBefore(date);
+              }}
+            />
+            <span>以前に初変身</span>
+          </div>
         )}
         {loading ? null : (
           <div className="grid grid-cols-2 my-4 md:grid-cols-4 justify-items-center gap-3">

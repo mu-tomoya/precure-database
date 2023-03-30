@@ -4,10 +4,19 @@ import dayjs from "dayjs";
 import client from "@/lib/apollo-client";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Hero from "@/components/Hero";
+import Head from "next/head";
 
 export default function Character({ precure }: { precure: Precure }) {
   return (
     <div>
+      <Head>
+        <title>{precure["cure_name"]} | プリキュアデータベース</title>
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_SITE_URL}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`${precure["cure_name"]}|プリキュアデータベース`} />
+        <meta property="og:site_name" content="サイト名" />
+        <meta property="og:image" content={`${process.env.NEXT_PUBLIC_IMAGE_URL}/precure/${precure["cure_name"]}.webp`} />
+      </Head>
       <Hero>キャラクター</Hero>
       <div className="mx-4 my-8">
         <img
