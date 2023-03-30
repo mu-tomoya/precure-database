@@ -3,94 +3,98 @@ import { Precure } from "@/gql/graphql";
 import dayjs from "dayjs";
 import client from "@/lib/apollo-client";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Hero from "@/components/Hero";
 
 export default function Character({ precure }: { precure: Precure }) {
   return (
-    <div className="outline outline-main mx-4 py-4 rounded-lg">
-      <img
-        className="max-w-xs md:max-w-md mx-auto rounded-md"
-        src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/precure/${precure["cure_name"]}.webp`}
-        alt={precure["cure_name"]}
-      />
-      <h1 className={`text-xl font-bold text-center my-4 name-${precure["color"]}`}>
-        {precure["cure_name"]}/{precure["name"]}
-      </h1>
-      <dl>
-        <dt>
-          <span className="tag">シリーズ</span>
-        </dt>
-        <dd>{precure["series"]}</dd>
-        {precure["birthday"] ? (
-          <>
-            <dt>
-              <span className="tag">誕生日</span>
-            </dt>
-            <dd>
-              {precure["birthday"]?.replace("/", "月")}日 {precure["age"] ? `(${precure["age"]}歳)` : ""}
-            </dd>
-          </>
-        ) : (
-          ""
-        )}
-        <dt>
-          <span className="tag">変身セリフ</span>
-        </dt>
-        <dd>
-          <p>「{precure["before_prologue"]}</p>
-          <p>{precure["after_prologue"]}」</p>
-        </dd>
-        <dt>
-          <span className="tag">変身アイテム</span>
-        </dt>
-        <dd>{precure["item"]}</dd>
-        <dt>
-          <span className="tag">CV.</span>
-        </dt>
-        <dd>
-          {precure["voice"]} ({dayjs(precure["voice_birthday"]).format("M月D日生まれ")})
-        </dd>
-        <dt>
-          <span className="tag">パートナー妖精</span>
-        </dt>
-        {precure["fairy"]?.map((fairy, i) => (
-          <dd key={i}>{fairy}</dd>
-        ))}
-        <dt>
-          <span className="font-bold text-lg">必殺技</span>
-        </dt>
-        <dt>
-          <span className="tag">個人技</span>
-        </dt>
-        <dd>
-          <ul>
-            {precure["special"]?.solo.map((solo, i) => (
-              <li className={`special special-${precure["color"]}`} key={i}>
-                {solo}
-              </li>
-            ))}
-          </ul>
-        </dd>
-        <dt>
-          <span className="tag">チーム技</span>
-        </dt>
-        <dd>
-          <ul>
-            {precure["special"]?.team.map((team, i) => (
-              <li className={`special special-${precure["color"]}`} key={i}>
-                {team}
-              </li>
-            ))}
-          </ul>
-        </dd>
-      </dl>
-      <div className="mx-2">
-        <h2 className={`text-xl font-bold my-4  text-${precure["color"]}`}>変身シーン</h2>
-        <div className="youtube my-2">
-          <iframe
-            src={`https://www.youtube.com/embed/${precure["youtube_id"]}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          ></iframe>
+    <div>
+      <Hero>キャラクター</Hero>
+      <div className="mx-4 my-8">
+        <img
+          className="max-w-xs md:max-w-md mt-8 object-cover mx-auto rounded-3xl"
+          src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/precure/${precure["cure_name"]}.webp`}
+          alt={precure["cure_name"]}
+        />
+        <h1 className={`text-xl font-bold md:text-4xl text-center my-4 md:my-8 name-${precure["color"]}`}>
+          {precure["cure_name"]}/{precure["name"]}
+        </h1>
+        <dl>
+          <dt>
+            <span className="tag">シリーズ</span>
+          </dt>
+          <dd>{precure["series"]}</dd>
+          {precure["birthday"] ? (
+            <>
+              <dt>
+                <span className="tag">誕生日</span>
+              </dt>
+              <dd>
+                {precure["birthday"]?.replace("/", "月")}日 {precure["age"] ? `(${precure["age"]}歳)` : ""}
+              </dd>
+            </>
+          ) : (
+            ""
+          )}
+          <dt>
+            <span className="tag">変身セリフ</span>
+          </dt>
+          <dd>
+            <p>「{precure["before_prologue"]}</p>
+            <p>{precure["after_prologue"]}」</p>
+          </dd>
+          <dt>
+            <span className="tag">変身アイテム</span>
+          </dt>
+          <dd>{precure["item"]}</dd>
+          <dt>
+            <span className="tag">CV.</span>
+          </dt>
+          <dd>
+            {precure["voice"]} ({dayjs(precure["voice_birthday"]).format("M月D日生まれ")})
+          </dd>
+          <dt>
+            <span className="tag">パートナー妖精</span>
+          </dt>
+          {precure["fairy"]?.map((fairy, i) => (
+            <dd key={i}>{fairy}</dd>
+          ))}
+          <dt>
+            <span className="font-bold text-lg md:text-2xl">必殺技</span>
+          </dt>
+          <dt>
+            <span className="tag">個人技</span>
+          </dt>
+          <dd>
+            <ul>
+              {precure["special"]?.solo.map((solo, i) => (
+                <li className={`special special-${precure["color"]}`} key={i}>
+                  {solo}
+                </li>
+              ))}
+            </ul>
+          </dd>
+          <dt>
+            <span className="tag">チーム技</span>
+          </dt>
+          <dd>
+            <ul>
+              {precure["special"]?.team.map((team, i) => (
+                <li className={`special special-${precure["color"]}`} key={i}>
+                  {team}
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </dl>
+        <div className="mx-2 md:mx-8">
+          <h2 className={`text-xl md:text-2xl font-bold my-4  text-${precure["color"]}`}>変身シーン</h2>
+          <div className="youtube my-2">
+            <iframe
+              src={`https://www.youtube.com/embed/${precure["youtube_id"]}`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>

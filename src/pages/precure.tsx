@@ -3,6 +3,7 @@ import { useQuery, gql, DocumentNode } from "@apollo/client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import RadioButton from "@/components/RadioButton";
+import Hero from "@/components/Hero";
 const QUERY: DocumentNode = gql`
   query Precure($color: Color, $after: String, $before: String, $age: Age, $series_id: String) {
     precureAllStars(color: $color, after: $after, before: $before, age: $age, series_id: $series_id) {
@@ -43,8 +44,8 @@ export default function PrecurePage() {
   }
   return (
     <>
-      <h2 className="text-main font-bold my-2 mx-2 text-lg">プリキュアを検索</h2>
-      <ul className="grid grid-cols-5 my-3 mx-1">
+      <Hero>プリキュアを検索</Hero>
+      <ul className="grid grid-cols-4 my-3 mx-1">
         <li>
           <RadioButton str="シリーズ" value="series" name="precure" setValue={setEnquiry} />
         </li>
@@ -57,9 +58,6 @@ export default function PrecurePage() {
         <li>
           <RadioButton str="以前" value="before" name="precure" setValue={setEnquiry} />
         </li>
-        <li>
-          <RadioButton str="年齢" value="age" name="precure" setValue={setEnquiry} />
-        </li>
       </ul>
       {enquiry === "series" && (
         <select className="w-3/4" onChange={(e) => setSeriesId(e.target.value)}>
@@ -71,7 +69,7 @@ export default function PrecurePage() {
         </select>
       )}
       {loading ? null : (
-        <div className="grid grid-cols-2 md:grid-cols-4 justify-items-center gap-3">
+        <div className="grid grid-cols-2 my-4 md:grid-cols-4 justify-items-center gap-3">
           {data.precureAllStars.map((value: any) => (
             <Link href={`/precure/${value["id"]}`} key={value["id"]}>
               <img

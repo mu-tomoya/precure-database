@@ -8,16 +8,16 @@
     @apply bg-gray-50 outline outline-main text-black rounded-lg focus-visible:ring-main block w-1/5 mx-auto my-4 p-2.5 font-bold;
   }
   dl {
-    @apply grid grid-cols-2 gap-x-2 gap-y-4  mx-4 my-4;
+    @apply grid grid-cols-5 gap-x-2 md:w-3/5  gap-y-4 md:gap-y-6 mx-4 md:mx-auto my-4;
   }
   dl dt {
-    @apply col-start-1;
+    @apply col-start-1 col-span-2;
   }
   dl dd {
-    @apply col-start-2;
+    @apply col-start-3 col-span-3 md:text-xl;
   }
   .tag {
-    @apply bg-main text-white font-bold rounded-full px-2 py-0.5 text-sm;
+    @apply bg-main text-white font-bold rounded-full px-2 py-0.5 text-sm md:text-base md:px-4 md:py-1;
   }
 }
 
@@ -132,6 +132,15 @@ li.special-gold::before {
 .text-green {
   color: var(--green);
 }
+.text-purple {
+  color: var(--purple);
+}
 .text-gold {
   color: var(--gold);
+}
+
+.hero {
+  background: #fbc3d3;
+  background-size: cover;
+  position: relative;
 }
