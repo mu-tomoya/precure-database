@@ -22,5 +22,6 @@ export const GetWindowSize = () => {
       return;
     }
   }, []);
-  return windowSize;
+  const breakPoint = 768;
+  return { windowSize, breakPoint };
 };

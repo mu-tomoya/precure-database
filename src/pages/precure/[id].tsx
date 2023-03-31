@@ -5,8 +5,10 @@ import client from "@/lib/apollo-client";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Hero from "@/components/Hero";
 import Head from "next/head";
+import { ReactNode } from "react";
+import PrecureLayout from "@/components/PrecureLayout";
 
-export default function Character({ precure }: { precure: Precure }) {
+const Character = ({ precure }: { precure: Precure }) => {
   return (
     <div>
       <Head>
@@ -111,7 +113,7 @@ export default function Character({ precure }: { precure: Precure }) {
       </div>
     </div>
   );
-}
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await client.query({
@@ -168,3 +170,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   };
 };
+
+export default Character;
+Character.getLayout = (page: ReactNode) => <PrecureLayout>{page}</PrecureLayout>;
