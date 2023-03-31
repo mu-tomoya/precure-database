@@ -1,15 +1,19 @@
 import { Age, Precure, Series } from "@/gql/graphql";
+import { GetStaticProps } from "next";
 import { useQuery, gql, DocumentNode } from "@apollo/client";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import RadioButton from "@/components/RadioButton";
 import Hero from "@/components/Hero";
 import "flatpickr/dist/flatpickr.min.css";
 import { Japanese } from "flatpickr/dist/l10n/ja.js";
 import Flatpickr from "react-flatpickr";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { GetWindowSize } from "@/components/hooks/GetWindowSize";
+import Loading from "@/components/Loading";
+import { usePrecure } from "@/components/hooks/PrecureProvider";
+import PrecureLayout from "@/components/PrecureLayout";
+import client from "@/lib/apollo-client";
 
 const QUERY: DocumentNode = gql`
   query Precure($color: Color, $after: String, $before: String, $age: Age, $series_id: String) {
@@ -18,48 +22,36 @@ const QUERY: DocumentNode = gql`
       cure_name
       series
     }
-    seriesAll {
-      title
-      id
-    }
   }
 `;
-export default function PrecurePage(): JSX.Element | null {
-  const [color, setColor] = useState<string>();
-  const [after, setAfter] = useState<Date>();
-  const [before, setBefore] = useState<Date>();
-  const [age, setAge] = useState<Age>();
-  const [seriesId, setSeriesId] = useState("");
-  const [enquiry, setEnquiry] = useState("");
-  const [array, setArray] = useState<Series[]>([]);
-  const { width } = GetWindowSize();
-  const imgWidth = width <= 768 ? "10rem" : "300px";
-  const imgHeight = width >= 768 ? "210px" : "400px";
-
-  const div = useRef<HTMLDivElement>(null);
+const PrecurePage = ({ series }: { series: [{ id: Series["id"]; title: Series["title"] }] }) => {
+  const { color, setColor, before, setBefore, after, setAfter, seriesId, setSeriesId, enquiry, setEnquiry } = usePrecure();
+  const { windowSize, breakPoint } = GetWindowSize();
+  const imgWidth = windowSize.width <= breakPoint ? "10rem" : "300px";
+  const imgHeight = windowSize.width >= breakPoint ? "210px" : "400px";
+  const div = useRef<HTMLDivElement>(null); //Animation発火用のref
   const option = {
     locale: Japanese,
     dateFormat: "Y/m/d",
-
     maxDate: new Date(),
   };
+
+  //GraphQL用変数の条件分岐
   let variables = {};
-  if (enquiry === "series" && seriesId) {
+  if (enquiry === "series" && seriesId && seriesId !== "all") {
     variables = { series_id: seriesId };
-  } else if (enquiry === "color" && color) {
+  } else if (enquiry === "color" && color && color !== "color") {
     variables = { color: color };
   } else if (enquiry === "after" && after) {
     variables = { after: after };
   } else if (enquiry === "before" && before) {
     variables = { before: before };
   }
+
   const { data, loading, error } = useQuery(QUERY, { variables: variables });
 
   useEffect(() => {
-    if (!loading) {
-      setArray(data.seriesAll);
-      setAnimation();
-    }
+    setAnimation();
   }, [loading]);
 
   const setAnimation = () => {
@@ -75,9 +67,15 @@ export default function PrecurePage(): JSX.Element | null {
       }
     );
   };
+
   if (error) {
     console.error(error);
-    return null;
+    return (
+      <>
+        <Hero>プリキュアを検索</Hero>
+        <p>ごめんなさい、うまく読み込みができませんでした。</p>
+      </>
+    );
   }
   return (
     <>
@@ -103,8 +101,10 @@ export default function PrecurePage(): JSX.Element | null {
             onChange={(e) => {
               setSeriesId(e.target.value);
             }}
+            value={seriesId}
           >
-            {array.map((item: { id: Series["id"]; title: Series["title"] }) => (
+            <option value="all">シリーズを選んでください</option>
+            {series.map((item: { id: Series["id"]; title: Series["title"] }) => (
               <option key={item["id"]} value={item["id"]}>
                 {item["title"]}
               </option>
@@ -112,7 +112,8 @@ export default function PrecurePage(): JSX.Element | null {
           </select>
         )}
         {enquiry === "color" && (
-          <select className="select w-1/3 md:w-1/5" onChange={(e) => setColor(e.target.value)}>
+          <select className="select w-1/3 md:w-1/5" onChange={(e) => setColor(e.target.value)} value={color}>
+            <option value="all">カラーを選択してください</option>
             <option value="black">黒</option>
             <option value="white">白</option>
             <option value="pink">ピンク</option>
@@ -128,6 +129,7 @@ export default function PrecurePage(): JSX.Element | null {
             <Flatpickr
               options={option}
               className="bg-white border border-gray-300 inline-block w-full p-2.5 shadow;"
+              value={after}
               onChange={([date]) => {
                 setAfter(date);
               }}
@@ -140,6 +142,7 @@ export default function PrecurePage(): JSX.Element | null {
             <Flatpickr
               options={option}
               className="bg-white border border-gray-300 inline-block w-full p-2.5 shadow;"
+              value={before}
               onChange={([date]) => {
                 setBefore(date);
               }}
@@ -147,13 +150,16 @@ export default function PrecurePage(): JSX.Element | null {
             <span>以前に初変身</span>
           </div>
         )}
-        {loading ? null : (
+
+        {loading ? (
+          <Loading />
+        ) : (
           <div className="grid grid-cols-2 my-4 md:grid-cols-4 justify-items-center gap-3">
             {data.precureAllStars.map((value: Precure) => (
-              <Link href={`/precure/${value["id"]}`} key={value["id"]}>
+              <Link href={`/precure/${value["id"]}`} key={value["id"]} className="touch-animation">
                 <div ref={div} id="precure">
                   <img
-                    className="w-40 md:w-[300px] rounded-md"
+                    className="w-40 md:w-[300px] rounded-lg mx-auto"
                     loading="lazy"
                     width={imgWidth}
                     height={imgHeight}
@@ -170,4 +176,23 @@ export default function PrecurePage(): JSX.Element | null {
       </div>
     </>
   );
-}
+};
+export const getStaticProps: GetStaticProps = async () => {
+  const { data } = await client.query({
+    query: gql`
+      query series {
+        seriesAll {
+          title
+          id
+        }
+      }
+    `,
+  });
+  return {
+    props: {
+      series: data.seriesAll,
+    },
+  };
+};
+export default PrecurePage;
+PrecurePage.getLayout = (page: ReactNode) => <PrecureLayout>{page}</PrecureLayout>;

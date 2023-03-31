@@ -144,3 +144,9 @@ li.special-gold::before {
   background-size: cover;
   position: relative;
 }
+.touch-animation {
+  transition: transform 0.2s;
+}
+.touch-animation:active {
+  transform: scale(0.95);
+}
