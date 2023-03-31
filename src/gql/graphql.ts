@@ -60,6 +60,8 @@ export type Precure = {
   cure_name: Scalars['String'];
   /** プリキュアチームとしての加入した放送日 */
   debut: Scalars['String'];
+  /** キャラクターの説明 */
+  description?: Maybe<Scalars['String']>;
   /** メイン妖精 */
   fairy?: Maybe<Array<Scalars['String']>>;
   /** プリキュアID（参加順） */
@@ -101,7 +103,7 @@ export type Query = {
 
 export type QueryPrecureArgs = {
   cure_name?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   voice?: InputMaybe<Scalars['String']>;
 };
@@ -114,6 +116,8 @@ export type QueryPrecureAllStarsArgs = {
   color?: InputMaybe<Color>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+  series?: InputMaybe<Scalars['String']>;
+  series_id?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -227,10 +231,30 @@ export enum Type {
   Op = 'op'
 }
 
-export type AllStarsQueryVariables = Exact<{ [key: string]: never; }>;
+export type PrecureQueryVariables = Exact<{
+  color?: InputMaybe<Color>;
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  age?: InputMaybe<Age>;
+  series_id?: InputMaybe<Scalars['String']>;
+}>;
 
 
-export type AllStarsQuery = { __typename?: 'Query', precureAllStars?: Array<{ __typename?: 'Precure', id: string, cure_name: string, series: string }> | null };
+export type PrecureQuery = { __typename?: 'Query', precureAllStars?: Array<{ __typename?: 'Precure', id: string, cure_name: string, series: string }> | null, seriesAll?: Array<{ __typename?: 'Series', title: string, id: string }> | null };
+
+export type PrecureIdsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const AllStarsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllStars"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"precureAllStars"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cure_name"}},{"kind":"Field","name":{"kind":"Name","value":"series"}}]}}]}}]} as unknown as DocumentNode<AllStarsQuery, AllStarsQueryVariables>;
+export type PrecureIdsQuery = { __typename?: 'Query', precureAllStars?: Array<{ __typename?: 'Precure', id: string }> | null };
+
+export type PrecureQueryQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type PrecureQueryQuery = { __typename?: 'Query', precure?: { __typename?: 'Precure', after_prologue?: string | null, age?: number | null, before_prologue?: string | null, birthday?: string | null, color: string, cure_name: string, debut: string, fairy?: Array<string> | null, id: string, item: string, name: string, series: string, series_id: string, voice: string, voice_birthday: string, youtube_id?: string | null, special?: { __typename?: 'Special', solo: Array<string>, team: Array<string> } | null } | null };
+
+
+export const PrecureDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Precure"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"color"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Color"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"age"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Age"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"series_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"precureAllStars"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"color"},"value":{"kind":"Variable","name":{"kind":"Name","value":"color"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}},{"kind":"Argument","name":{"kind":"Name","value":"age"},"value":{"kind":"Variable","name":{"kind":"Name","value":"age"}}},{"kind":"Argument","name":{"kind":"Name","value":"series_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"series_id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cure_name"}},{"kind":"Field","name":{"kind":"Name","value":"series"}}]}},{"kind":"Field","name":{"kind":"Name","value":"seriesAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<PrecureQuery, PrecureQueryVariables>;
+export const PrecureIdsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"precureIds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"precureAllStars"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<PrecureIdsQuery, PrecureIdsQueryVariables>;
+export const PrecureQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PrecureQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"precure"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"after_prologue"}},{"kind":"Field","name":{"kind":"Name","value":"age"}},{"kind":"Field","name":{"kind":"Name","value":"before_prologue"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"cure_name"}},{"kind":"Field","name":{"kind":"Name","value":"debut"}},{"kind":"Field","name":{"kind":"Name","value":"fairy"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"item"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"series"}},{"kind":"Field","name":{"kind":"Name","value":"series_id"}},{"kind":"Field","name":{"kind":"Name","value":"special"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"solo"}},{"kind":"Field","name":{"kind":"Name","value":"team"}}]}},{"kind":"Field","name":{"kind":"Name","value":"voice"}},{"kind":"Field","name":{"kind":"Name","value":"voice_birthday"}},{"kind":"Field","name":{"kind":"Name","value":"youtube_id"}}]}}]}}]} as unknown as DocumentNode<PrecureQueryQuery, PrecureQueryQueryVariables>;
