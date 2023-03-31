@@ -24,9 +24,12 @@ export default function Character({ precure }: { precure: Precure }) {
           src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/precure/${precure["cure_name"]}.webp`}
           alt={precure["cure_name"]}
         />
-        <h1 className={`text-xl font-bold md:text-4xl text-center my-4 md:my-8 name-${precure["color"]}`}>
-          {precure["cure_name"]}/{precure["name"]}
-        </h1>
+        <div className="my-8">
+          <h1 className={`text-xl font-bold md:text-4xl my-2 text-center md:my-8 name-${precure["color"]}`}>
+            {precure["cure_name"]}/{precure["name"]}
+          </h1>
+          <p className="md:w-3/5 mx-auto leading-loose text-lg">{precure["description"]}</p>
+        </div>
         <dl>
           <dt>
             <span className="tag">シリーズ</span>
@@ -95,7 +98,7 @@ export default function Character({ precure }: { precure: Precure }) {
             </ul>
           </dd>
         </dl>
-        <div className="mx-2 md:mx-8">
+        <div className="mx-auto md:w-3/5">
           <h2 className={`text-xl md:text-2xl font-bold my-4  text-${precure["color"]}`}>変身シーン</h2>
           <div className="youtube my-2">
             <iframe
@@ -153,6 +156,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           voice
           voice_birthday
           youtube_id
+          description
         }
       }
     `,
