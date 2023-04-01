@@ -14,6 +14,7 @@ import Loading from "@/components/Loading";
 import { usePrecure } from "@/components/hooks/PrecureProvider";
 import PrecureLayout from "@/components/PrecureLayout";
 import client from "@/lib/apollo-client";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const QUERY: DocumentNode = gql`
   query Precure($color: Color, $after: String, $before: String, $age: Age, $series_id: String) {
@@ -51,6 +52,7 @@ const PrecurePage = ({ series }: { series: [{ id: Series["id"]; title: Series["t
   const { data, loading, error } = useQuery(QUERY, { variables: variables });
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     setAnimation();
   }, [loading]);
 
@@ -62,8 +64,12 @@ const PrecurePage = ({ series }: { series: [{ id: Series["id"]; title: Series["t
         //toの設定
         opacity: 1,
         y: 0,
-        duration: 2,
-        stagger: 0.1,
+        duration: 4,
+        ScrollTrigger: {
+          trigger: "#top",
+          start: "top center",
+          end: "bottom center",
+        },
       }
     );
   };
