@@ -35,47 +35,40 @@
 }
 
 .name-purple {
-  background: linear-gradient(135deg, var(--purple) 0%, var(--invert) 5%);
-  background: -webkit-linear-gradient(-45deg, var(--purple) 0%, var(--invert) 100%);
+  background: -webkit-linear-gradient(-45deg, var(--purple) 0%, var(--invert) 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .name-yellow {
-  background: linear-gradient(135deg, var(--yellow) 0%, var(--invert) 5%);
-  background: -webkit-linear-gradient(-45deg, var(--yellow) 0%, var(--invert) 100%);
+  background: -webkit-linear-gradient(-45deg, var(--yellow) 0%, var(--invert) 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .name-pink {
-  background: linear-gradient(135deg, var(--pink) 0%, var(--invert) 5%);
-  background: -webkit-linear-gradient(-45deg, var(--pink) 0%, var(--invert) 100%);
+  background: -webkit-linear-gradient(-45deg, var(--pink) 0%, var(--invert) 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .name-blue {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--invert) 5%);
-  background: -webkit-linear-gradient(-45deg, var(--blue) 0%, var(--invert) 100%);
+  background: -webkit-linear-gradient(-45deg, var(--blue) 0%, var(--invert) 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .name-green {
-  background: linear-gradient(135deg, var(--green) 0%, var(--invert) 5%);
-  background: -webkit-linear-gradient(-45deg, var(--green) 0%, var(--invert) 100%);
+  background: -webkit-linear-gradient(-45deg, var(--green) 0%, var(--invert) 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .name-red {
-  background: linear-gradient(135deg, var(--red) 0%, var(--invert) 5%);
-  background: -webkit-linear-gradient(-45deg, var(--red) 0%, var(--invert) 100%);
+  background: -webkit-linear-gradient(-45deg, var(--red) 0%, var(--invert) 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .name-gold {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--invert) 5%);
-  background: -webkit-linear-gradient(-45deg, var(--gold) 0%, var(--invert) 100%);
+  background: -webkit-linear-gradient(-45deg, var(--gold) 0%, var(--invert) 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
