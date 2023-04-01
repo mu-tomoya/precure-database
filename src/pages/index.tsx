@@ -12,7 +12,7 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="プリキュアデータベース" />
         <meta property="og:site_name" content="プリキュアデータベース" />
-        <meta property="og:image" content="/ogp.png" />
+        <meta property="og:image" content="https://precure-database.vercel.app/ogp.png" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-second grid h-screen content-center justify-center gap-16">
