@@ -16,7 +16,7 @@ const Character = ({ precure }: { precure: Precure }) => {
         <meta property="og:url" content="https://precure-database.vercel.app" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={`${precure["cure_name"]}|プリキュアデータベース`} />
-        <meta property="og:site_name" content="サイト名" />
+        <meta property="og:site_name" content="プリキュアデータベース" />
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_IMAGE_URL}/precure/${precure["cure_name"]}.webp`} />
         <meta property="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@mu_tomoya" />
