@@ -15,6 +15,7 @@ import { usePrecure } from "@/components/hooks/PrecureProvider";
 import PrecureLayout from "@/components/PrecureLayout";
 import client from "@/lib/apollo-client";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import Head from "next/head";
 
 const QUERY: DocumentNode = gql`
   query Precure($color: Color, $after: String, $before: String, $age: Age, $series_id: String) {
@@ -85,6 +86,10 @@ const PrecurePage = ({ series }: { series: [{ id: Series["id"]; title: Series["t
   }
   return (
     <>
+      <Head>
+        <title>プリキュアを検索</title>
+        <meta name="description" content="プリキュアを検索" />
+      </Head>
       <Hero>プリキュアを検索</Hero>
       <div id="top" className="my-8">
         <ul className="grid grid-cols-4 my-3 mx-1">
